@@ -108,6 +108,9 @@ svg.ring{transform:rotate(-90deg);}
 
 <!-- にゃー音声 -->
 <audio id="meowAudio" src="meow.m4a" preload="auto"></audio>
+<div style="position:fixed;bottom:16px;right:16px;z-index:999;">
+  <button onclick="playMeow()" style="padding:8px 14px;border-radius:999px;border:none;background:#22c55e;color:white;font-weight:bold;font-size:.85rem;cursor:pointer;">🔊 にゃーテスト</button>
+</div>
 
 <div class="ui">
   <div class="title-block">
@@ -158,6 +161,7 @@ svg.ring{transform:rotate(-90deg);}
       <div class="stat"><div class="stat-num" id="focusMin" style="color:var(--g3)">0</div><div class="stat-lbl">分 集中</div></div>
     </div>
     <div class="tomato-row" id="tomatoRow"></div>
+    <button class="clear-btn" onclick="resetCount()">🍅 カウントをリセット</button>
   </div>
 
   <div class="card">
@@ -285,11 +289,18 @@ function setMode(m){
   document.getElementById('startBtn').textContent='▶ スタート';
   updateDisplay();
 }
+function unlockAudio(){
+  // iPhoneのSafari対策：タップ時に一度無音再生して解除
+  const a=document.getElementById('meowAudio');
+  a.volume=0;
+  a.play().then(()=>{ a.pause(); a.currentTime=0; a.volume=1; }).catch(()=>{ a.volume=1; });
+}
 function toggleTimer(){
   if(running){
     worker.postMessage('stop');running=false;
     document.getElementById('startBtn').textContent='▶ 再開';
   }else{
+    unlockAudio();
     running=true;
     document.getElementById('startBtn').textContent='⏸ 一時停止';
     worker.postMessage('start');
@@ -331,7 +342,7 @@ function applySettings(){
   updateStats();
   document.getElementById('tab-work').textContent=`作業 ${cfg.work}分`;
   document.getElementById('tab-short').textContent=`小休憩 ${cfg.short}分`;
-  document.getElementById('tab-long').textContent=`長休憓 ${cfg.long}分`;
+      document.getElementById('tab-long').textContent=`長休憩 ${cfg.long}分`;
 }
 
 // ── Todo ──
@@ -367,6 +378,10 @@ function deleteTodo(id,e){
   e.stopPropagation();
   todos=todos.filter(x=>x.id!==id);if(selectedId===id)selectedId=null;
   saveTodos();renderTodos();
+}
+function resetCount(){
+  if(!confirm('今日のポモドーロ数をリセットしますか？'))return;
+  dayData.count=0;saveDay(dayData);updateStats();
 }
 function clearDone(){todos=todos.filter(x=>!x.done);saveTodos();renderTodos();}
 
