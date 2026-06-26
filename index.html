@@ -14,7 +14,6 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;min-height:100vh;
   display:flex;flex-direction:column;align-items:center;
   padding:16px 16px 30px;color:var(--text);overflow-x:hidden;}
 
-/* Forest BG */
 .forest-bg{position:fixed;inset:0;z-index:0;
   background:linear-gradient(180deg,#87ceeb 0%,#b0e8a0 52%,#4a9c30 52%,#3a7a22 100%);overflow:hidden;}
 .ground{position:absolute;bottom:0;left:0;width:200%;height:48%;
@@ -27,7 +26,6 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;min-height:100vh;
 .cloud{position:absolute;background:rgba(255,255,255,.82);border-radius:999px;animation:scrollCld linear infinite;}
 @keyframes scrollCld{from{transform:translateX(110vw)}to{transform:translateX(-30vw)}}
 
-/* UI */
 .ui{position:relative;z-index:20;display:flex;flex-direction:column;align-items:center;width:100%;}
 .title-block{margin:10px 0 14px;text-align:center;}
 .title-block h1{font-size:1.3rem;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35);letter-spacing:1px;}
@@ -36,34 +34,27 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;min-height:100vh;
 .card{background:var(--card);border-radius:22px;backdrop-filter:blur(8px);
   box-shadow:0 4px 24px rgba(0,0,0,.12);padding:18px 22px;width:100%;max-width:340px;margin-bottom:12px;}
 
-/* tabs */
 .tabs{display:flex;gap:6px;margin-bottom:16px;justify-content:center;}
 .tab{padding:5px 13px;border-radius:999px;border:2px solid var(--g1);
   background:white;color:var(--text);font-size:.75rem;cursor:pointer;transition:all .2s;}
 .tab.active{background:var(--g1);font-weight:bold;}
 
-/* Ring */
 .ring-wrap{position:relative;width:200px;height:200px;margin:0 auto 16px;}
 svg.ring{transform:rotate(-90deg);}
 .ring-bg{fill:none;stroke:#d1fae5;stroke-width:13;}
 .ring-fg{fill:none;stroke:var(--g2);stroke-width:13;stroke-linecap:round;
   transition:stroke-dashoffset 1s linear,stroke .4s;}
-
-/* Walking cat SVG on ring */
 #catOnRing{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
-
 .timer-display{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
 .timer-digits{font-size:2.6rem;font-weight:bold;letter-spacing:2px;line-height:1;color:var(--g3);}
 .mode-label{font-size:.7rem;color:var(--muted);margin-top:4px;}
 
-/* controls */
 .controls{display:flex;gap:10px;margin-bottom:14px;justify-content:center;}
 .btn{padding:9px 24px;border-radius:999px;border:none;font-size:.95rem;font-weight:bold;cursor:pointer;transition:all .15s;}
 .btn-start{background:var(--g2);color:white;}
 .btn-start:hover{background:var(--g3);}
 .btn-reset{background:white;color:var(--muted);border:2px solid var(--g1);}
 
-/* Settings */
 .settings-toggle{font-size:.75rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;margin-bottom:6px;display:block;text-align:center;}
 .settings-panel{display:none;}
 .settings-panel.open{display:block;}
@@ -75,14 +66,12 @@ svg.ring{transform:rotate(-90deg);}
 .apply-btn{margin-top:10px;width:100%;padding:7px;border-radius:12px;border:none;
   background:var(--g2);color:white;font-weight:bold;font-size:.85rem;cursor:pointer;}
 
-/* Stats */
 .stats-row{display:flex;justify-content:space-around;margin-bottom:8px;}
 .stat{text-align:center;}
 .stat-num{font-size:1.5rem;font-weight:bold;}
 .stat-lbl{font-size:.7rem;color:var(--muted);}
 .tomato-row{font-size:1.1rem;letter-spacing:2px;min-height:1.4rem;text-align:center;}
 
-/* Todo */
 .todo-header{font-size:.78rem;color:var(--muted);margin-bottom:8px;}
 .todo-add{display:flex;gap:6px;margin-bottom:10px;}
 .todo-input{flex:1;padding:8px 12px;border-radius:12px;border:2px solid var(--g1);
@@ -117,6 +106,9 @@ svg.ring{transform:rotate(-90deg);}
   <div id="clouds"></div>
 </div>
 
+<!-- にゃー音声 -->
+<audio id="meowAudio" src="meow.m4a" preload="auto"></audio>
+
 <div class="ui">
   <div class="title-block">
     <h1>🍅 にゃんこのポモドーロ</h1>
@@ -135,10 +127,8 @@ svg.ring{transform:rotate(-90deg);}
         <circle class="ring-bg" cx="100" cy="100" r="87"/>
         <circle class="ring-fg" id="ringFg" cx="100" cy="100" r="87" stroke-dasharray="547" stroke-dashoffset="0"/>
       </svg>
-      <!-- Walking cat emoji overlay -->
       <svg id="catOnRing" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <text id="catEmoji" text-anchor="middle" dominant-baseline="middle"
-          font-size="24" x="0" y="0">🐱</text>
+        <text id="catEmoji" text-anchor="middle" dominant-baseline="middle" font-size="24" x="0" y="0">🐱</text>
       </svg>
       <div class="timer-display">
         <div class="timer-digits" id="digits">25:00</div>
@@ -162,7 +152,6 @@ svg.ring{transform:rotate(-90deg);}
     </div>
   </div>
 
-  <!-- Stats -->
   <div class="card">
     <div class="stats-row">
       <div class="stat"><div class="stat-num" id="countNum" style="color:var(--g2)">0</div><div class="stat-lbl">ポモドーロ</div></div>
@@ -171,7 +160,6 @@ svg.ring{transform:rotate(-90deg);}
     <div class="tomato-row" id="tomatoRow"></div>
   </div>
 
-  <!-- Todo -->
   <div class="card">
     <div class="todo-header">📋 Todoリスト</div>
     <div class="todo-add">
@@ -186,7 +174,7 @@ svg.ring{transform:rotate(-90deg);}
 </div>
 
 <script>
-// Forest
+// ── Forest ──
 function drawTrees(el,count,minH,maxH,minW,maxW){
   const greens=['#2d6a2d','#3a8a3a','#256025','#4ca64c','#1e5c1e'];
   let h='';
@@ -211,17 +199,31 @@ drawTrees(document.getElementById('trees2'),22,50,110,20,38);
   }
 })();
 
-// Timer
+// ── Web Worker (Blob) ──
+const workerCode=`
+  let interval=null;
+  self.onmessage=function(e){
+    if(e.data==='start'){
+      if(interval) clearInterval(interval);
+      interval=setInterval(()=>self.postMessage('tick'),1000);
+    } else if(e.data==='stop'){
+      clearInterval(interval); interval=null;
+    }
+  };
+`;
+const worker=new Worker(URL.createObjectURL(new Blob([workerCode],{type:'application/javascript'})));
+worker.onmessage=()=>tick();
+
+// ── Timer state ──
 let cfg={work:25,short:5,long:15};
 const MODES={
-  work: {label:'作業タイム',  stroke:'#22c55e'},
-  short:{label:'小休憩☕',    stroke:'#4ade80'},
-  long: {label:'のんびり休憩',stroke:'#86efac'},
+  work: {label:'作業タイム',  stroke:'#22c55e',cat:'🐱'},
+  short:{label:'小休憩☕',    stroke:'#4ade80',cat:'😸'},
+  long: {label:'のんびり休憩',stroke:'#86efac',cat:'😻'},
 };
 const CIRC=2*Math.PI*87;
 let mode='work',totalSec=cfg.work*60,remaining=totalSec;
-let running=false,interval=null,sessionSet=0;
-let orbitDeg=0,legPhase=0;
+let running=false,sessionSet=0,orbitDeg=0;
 
 try{const sc=JSON.parse(localStorage.getItem('pomo_cfg')||'null');
   if(sc){cfg=sc;totalSec=cfg.work*60;remaining=totalSec;
@@ -234,39 +236,48 @@ function loadDay(){try{return JSON.parse(localStorage.getItem('pomo_data')||'{}'
 function saveDay(d){try{const a=JSON.parse(localStorage.getItem('pomo_data')||'{}');a[TODAY]=d;localStorage.setItem('pomo_data',JSON.stringify(a));}catch{}}
 let dayData=loadDay();
 
-// Todo storage
+// ── Todo ──
 function loadTodos(){try{return JSON.parse(localStorage.getItem('pomo_todos')||'[]');}catch{return[];}}
 function saveTodos(){localStorage.setItem('pomo_todos',JSON.stringify(todos));}
 let todos=loadTodos();
 let selectedId=null;
 
-function fmt(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+// ── Sound ──
+function playMeow(){
+  const a=document.getElementById('meowAudio');
+  if(a.src && !a.src.endsWith('meow.m4a')){return;}
+  a.currentTime=0;
+  a.play().catch(()=>{});
+}
+function playDone(){
+  try{const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [523,659,784].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);o.frequency.value=f;o.type='sine';
+      const t=ctx.currentTime+i*.22;
+      g.gain.setValueAtTime(.22,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);
+      o.start(t);o.stop(t+.45);});}catch{}
+  // タイマー完了時もにゃー
+  playMeow();
+}
 
-// Cat on ring
-const R=87, CX=100, CY=100;
+// ── Display ──
+function fmt(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+const R=87,CX=100,CY=100;
 function placeCat(deg){
   const rad=(deg-90)*Math.PI/180;
-  const px=CX+R*Math.cos(rad);
-  const py=CY+R*Math.sin(rad);
   const el=document.getElementById('catEmoji');
-  // モードで絵文字切り替え
-  const cats={work:'🐱',short:'😸',long:'😻'};
-  el.textContent=cats[mode]||'🐱';
-  el.setAttribute('x', px);
-  el.setAttribute('y', py);
+  el.textContent=MODES[mode].cat;
+  el.setAttribute('x',CX+R*Math.cos(rad));
+  el.setAttribute('y',CY+R*Math.sin(rad));
 }
-function animateLegs(){} // 絵文字なので不要
-
 function updateRing(){
-  const off=CIRC*(1-remaining/totalSec);
-  document.getElementById('ringFg').style.strokeDashoffset=off;
+  document.getElementById('ringFg').style.strokeDashoffset=CIRC*(1-remaining/totalSec);
   document.getElementById('ringFg').style.stroke=MODES[mode].stroke;
 }
 function updateDisplay(){
   document.getElementById('digits').textContent=fmt(remaining);
   document.getElementById('modeLabel').textContent=MODES[mode].label;
-  updateRing();
-  placeCat(orbitDeg);
+  updateRing();placeCat(orbitDeg);
 }
 function updateStats(){
   document.getElementById('countNum').textContent=dayData.count;
@@ -274,41 +285,7 @@ function updateStats(){
   document.getElementById('tomatoRow').textContent='🍅'.repeat(Math.min(dayData.count,12));
 }
 
-// Todo UI
-function renderTodos(){
-  const ul=document.getElementById('todoList');
-  ul.innerHTML='';
-  todos.forEach(t=>{
-    const li=document.createElement('li');
-    li.className='todo-item'+(t.done?' done':'')+(t.id===selectedId&&!t.done?' selected':'');
-    li.innerHTML=`
-      <div class="todo-sel-dot"></div>
-      <div class="todo-check" onclick="toggleDone('${t.id}',event)">${t.done?'✓':''}</div>
-      <span class="todo-text">${escHtml(t.text)}</span>
-      <button class="todo-del" onclick="deleteTodo('${t.id}',event)">✕</button>`;
-    if(!t.done) li.onclick=()=>selectTodo(t.id);
-    ul.appendChild(li);
-  });
-}
-function escHtml(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function addTodo(){
-  const inp=document.getElementById('todoInput');
-  const text=inp.value.trim();
-  if(!text)return;
-  todos.push({id:Date.now().toString(),text,done:false});
-  saveTodos();inp.value='';renderTodos();
-}
-function selectTodo(id){selectedId=(selectedId===id?null:id);renderTodos();}
-function toggleDone(id,e){e.stopPropagation();
-  const t=todos.find(x=>x.id===id);if(!t)return;
-  t.done=!t.done;if(t.done&&selectedId===id)selectedId=null;
-  saveTodos();renderTodos();}
-function deleteTodo(id,e){e.stopPropagation();
-  todos=todos.filter(x=>x.id!==id);if(selectedId===id)selectedId=null;
-  saveTodos();renderTodos();}
-function clearDone(){todos=todos.filter(x=>!x.done);saveTodos();renderTodos();}
-
-// Timer controls
+// ── Timer ──
 function setMode(m){
   if(running)return;
   mode=m;totalSec=cfg[m]*60;remaining=totalSec;orbitDeg=0;
@@ -317,18 +294,24 @@ function setMode(m){
   updateDisplay();
 }
 function toggleTimer(){
-  if(running){clearInterval(interval);running=false;document.getElementById('startBtn').textContent='▶ 再開';}
-  else{running=true;document.getElementById('startBtn').textContent='⏸ 一時停止';interval=setInterval(tick,1000);}
+  if(running){
+    worker.postMessage('stop');running=false;
+    document.getElementById('startBtn').textContent='▶ 再開';
+  }else{
+    running=true;
+    document.getElementById('startBtn').textContent='⏸ 一時停止';
+    worker.postMessage('start');
+  }
 }
 function tick(){
+  if(!running)return;
   remaining--;
   orbitDeg=(orbitDeg+6)%360;
-  animateLegs();
   updateDisplay();
-  if(remaining<=0){clearInterval(interval);running=false;onComplete();}
+  if(remaining<=0){worker.postMessage('stop');running=false;onComplete();}
 }
 function resetTimer(){
-  clearInterval(interval);running=false;remaining=totalSec;orbitDeg=0;
+  worker.postMessage('stop');running=false;remaining=totalSec;orbitDeg=0;
   document.getElementById('startBtn').textContent='▶ スタート';
   updateDisplay();
 }
@@ -337,11 +320,13 @@ function onComplete(){
   if(mode==='work'){
     sessionSet++;dayData.count++;
     saveDay(dayData);updateStats();
-    // mark selected todo as contributed (not auto-complete)
     setTimeout(()=>{if(sessionSet>=4){setMode('long');sessionSet=0;}else setMode('short');},1200);
-  }else{setTimeout(()=>setMode('work'),1200);}
+  }else{
+    setTimeout(()=>setMode('work'),1200);
+  }
 }
 
+// ── Settings ──
 function toggleSettings(){document.getElementById('settingsPanel').classList.toggle('open');}
 function applySettings(){
   const w=parseInt(document.getElementById('setWork').value)||25;
@@ -354,23 +339,47 @@ function applySettings(){
   updateStats();
   document.getElementById('tab-work').textContent=`作業 ${cfg.work}分`;
   document.getElementById('tab-short').textContent=`小休憩 ${cfg.short}分`;
-  document.getElementById('tab-long').textContent=`長休憩 ${cfg.long}分`;
+  document.getElementById('tab-long').textContent=`長休憓 ${cfg.long}分`;
 }
 
-function playDone(){
-  try{const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    [523,659,784].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();
-      o.connect(g);g.connect(ctx.destination);o.frequency.value=f;o.type='sine';
-      const t=ctx.currentTime+i*.22;
-      g.gain.setValueAtTime(.22,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);
-      o.start(t);o.stop(t+.45);});}catch{}
+// ── Todo ──
+function renderTodos(){
+  const ul=document.getElementById('todoList');ul.innerHTML='';
+  todos.forEach(t=>{
+    const li=document.createElement('li');
+    li.className='todo-item'+(t.done?' done':'')+(t.id===selectedId&&!t.done?' selected':'');
+    li.innerHTML=`<div class="todo-sel-dot"></div>
+      <div class="todo-check" onclick="toggleDone('${t.id}',event)">${t.done?'✓':''}</div>
+      <span class="todo-text">${escHtml(t.text)}</span>
+      <button class="todo-del" onclick="deleteTodo('${t.id}',event)">✕</button>`;
+    if(!t.done)li.onclick=()=>selectTodo(t.id);
+    ul.appendChild(li);
+  });
 }
+function escHtml(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function addTodo(){
+  const inp=document.getElementById('todoInput'),text=inp.value.trim();
+  if(!text)return;
+  todos.push({id:Date.now().toString(),text,done:false});
+  saveTodos();inp.value='';renderTodos();
+}
+function selectTodo(id){selectedId=(selectedId===id?null:id);renderTodos();}
+function toggleDone(id,e){
+  e.stopPropagation();
+  const t=todos.find(x=>x.id===id);if(!t)return;
+  t.done=!t.done;
+  if(t.done){playMeow();if(selectedId===id)selectedId=null;}
+  saveTodos();renderTodos();
+}
+function deleteTodo(id,e){
+  e.stopPropagation();
+  todos=todos.filter(x=>x.id!==id);if(selectedId===id)selectedId=null;
+  saveTodos();renderTodos();
+}
+function clearDone(){todos=todos.filter(x=>!x.done);saveTodos();renderTodos();}
 
 // Init
-placeCat(0);
-updateDisplay();
-updateStats();
-renderTodos();
+updateDisplay();updateStats();renderTodos();
 </script>
 </body>
 </html>
