@@ -245,18 +245,10 @@ let selectedId=null;
 // ── Sound ──
 function playMeow(){
   const a=document.getElementById('meowAudio');
-  if(a.src && !a.src.endsWith('meow.m4a')){return;}
   a.currentTime=0;
   a.play().catch(()=>{});
 }
 function playDone(){
-  try{const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    [523,659,784].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();
-      o.connect(g);g.connect(ctx.destination);o.frequency.value=f;o.type='sine';
-      const t=ctx.currentTime+i*.22;
-      g.gain.setValueAtTime(.22,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);
-      o.start(t);o.stop(t+.45);});}catch{}
-  // タイマー完了時もにゃー
   playMeow();
 }
 
